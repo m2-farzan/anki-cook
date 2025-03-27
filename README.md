@@ -59,6 +59,7 @@ Deck saved to out/cooking_1.apkg
 
 - [ ] Simple flask front-end for easy use!
 - [ ] More QA and tuning
+- [ ] Better card ordering (some shuffle?)
 
 # More examples
 

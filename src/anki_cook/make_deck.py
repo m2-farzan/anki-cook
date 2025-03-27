@@ -1,3 +1,4 @@
+from os.path import basename
 from typing import Mapping, Optional
 
 import genanki
@@ -43,16 +44,19 @@ def make_deck(
     )
 
     anki_deck = genanki.Deck(2059404118, title)
+    sound_list = []
     for i, word in enumerate(word_list.words):
         target_word = word.original
         target_extra = word.extra
         if target_sounds and (s := target_sounds.get(word.original)):
-            target_sound = f"[sound:{s}]"
+            target_sound = f"[sound:{basename(s)}]"
+            sound_list.append(s)
         else:
             target_sound = ""
         native_word = word.meaning
         if native_sounds and (s := native_sounds.get(word.meaning)):
-            native_sound = f"[sound:{s}]"
+            native_sound = f"[sound:{basename(s)}]"
+            sound_list.append(s)
         else:
             native_sound = ""
         sort_id = str(i)
@@ -70,5 +74,6 @@ def make_deck(
         anki_deck.add_note(anki_note)
 
     package = genanki.Package(anki_deck)
+    package.media_files = sound_list
 
     return package
