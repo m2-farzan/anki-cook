@@ -1,0 +1,14 @@
+.card {
+    font-family: "Noto Sans Japanese";
+    font-size: 20px;
+    text-align: center;
+}
+
+@font-face {
+    font-family: "Noto Sans Japanese";
+    src: url("_NotoSansCJKjp-Regular.woff2") format("woff2");
+}
+
+.japanese {
+    font-family: "Noto Sans Japanese";
+}

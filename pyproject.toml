@@ -1,0 +1,24 @@
+[project]
+name = "anki-cook"
+version = "0.1.0"
+description = "Generate anki decks from any prompt"
+authors = [
+    {name = "Mostafa Farzan",email = "m2_farzan@yahoo.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "genanki (>=0.13.1,<0.14.0)",
+    "openai (>=1.68.2,<2.0.0)",
+    "pydantic (>=2.10.6,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+anki_cook = "src.anki_cook.cli:main"
