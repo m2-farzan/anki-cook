@@ -1,10 +1,11 @@
+import re
 from argparse import ArgumentParser
+
 from anki_cook.gen_wordlist import gen_wordlist
-from anki_cook.utils.source_envfile import source_envfile
+from anki_cook.get_sounds import get_sounds
 from anki_cook.make_deck import make_deck
 from anki_cook.save_deck import save_deck
-from anki_cook.get_sounds import get_sounds
-import re
+from anki_cook.utils.source_envfile import source_envfile
 
 
 def main():

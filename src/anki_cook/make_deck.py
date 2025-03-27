@@ -1,7 +1,9 @@
-from anki_cook.wordlist import WordList
-import genanki
-from anki_cook.utils.load_static import load_template, load_style
 from typing import Mapping, Optional
+
+import genanki
+
+from anki_cook.utils.load_static import load_style, load_template
+from anki_cook.wordlist import WordList
 
 
 def make_deck(

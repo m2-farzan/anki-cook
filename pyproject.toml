@@ -25,4 +25,5 @@ anki_cook = "src.anki_cook.cli:main"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
+isort = "^6.0.1"
 

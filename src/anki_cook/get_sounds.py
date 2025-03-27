@@ -1,7 +1,8 @@
-from anki_cook.openai_client import openai_client
-from typing import List, Mapping, Optional
 import os
 import re
+from typing import List, Mapping, Optional
+
+from anki_cook.openai_client import openai_client
 
 
 def get_sounds(

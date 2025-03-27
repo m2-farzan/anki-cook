@@ -1,7 +1,8 @@
-from anki_cook.openai_client import openai_client
-from anki_cook.wordlist import WordList
 import os
 import re
+
+from anki_cook.openai_client import openai_client
+from anki_cook.wordlist import WordList
 
 
 def gen_wordlist(
