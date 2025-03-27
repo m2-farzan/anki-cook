@@ -1,8 +1,11 @@
-## Purpose
+## Concept
 
 Generate anki cards about any topic!
 
 I never forget the words that I use in real life so I try to use this method before I go to an event, etc.
+
+It uses ChatGPT/OpenAI tools to generate the word-list and text-to-speech files.
+So far the accuracy seems to be good enough for daily language learning.
 
 ## Installation
 
@@ -59,7 +62,7 @@ Deck saved to out/cooking_1.apkg
 
 - [ ] Simple flask front-end for easy use!
 - [ ] More QA and tuning
-- [ ] Better card ordering (some shuffle?)
+- [ ] MAYYYBEE Better card ordering (I think anki takes care of this but I need to double check)
 
 # More examples
 

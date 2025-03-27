@@ -121,6 +121,42 @@ $ poetry run anki_cook --native english --target japanese_kana --extra japanese_
 Deck saved to out/going_to_a_doctor_for_a_cold.apkg
 ```
 
+## Before watching a movie
+
+```
+$ poetry run anki_cook --native english --target japanese_kanji --extra kana "seven samurai movie"
+七人の侍: Seven Samurai (しちにんのさむらい)
+映画: Movie (えいが)
+監督: Director (かんとく)
+黒澤明: Akira Kurosawa (くろさわ あきら)
+武士: Samurai (ぶし)
+剣: Sword (つるぎ)
+戦う: To fight (たたかう)
+農民: Farmer (のうみん)
+村: Village (むら)
+儀式: Ceremony (ぎしき)
+雇う: To hire (やとう)
+防衛: Defense (ぼうえい)
+軍団: Corps (ぐんだん)
+義務: Duty (ぎむ)
+士気: Morale (しき)
+作戦: Strategy (さくせん)
+名声: Fame (めいせい)
+勇気: Courage (ゆうき)
+忠誠: Loyalty (ちゅうせい)
+奉仕: Service (ほうし)
+名作: Masterpiece (めいさく)
+歴史: History (れきし)
+感動: Emotion (かんどう)
+置物: Prop (おきもの)
+盾: Shield (たて)
+退却: Retreat (たいきゃく)
+合戦: Battle (かっせん)
+勝利: Victory (しょうり)
+敵: Enemy (てき)
+絆: Bond (きずな)
+Deck saved to out/seven_samurai_movie.apkg
+```
 
 ## Impress strangers
 
