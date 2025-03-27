@@ -22,3 +22,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 anki_cook = "src.anki_cook.cli:main"
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+

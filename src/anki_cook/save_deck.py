@@ -1,6 +1,7 @@
 import os
 import genanki
 
+
 def save_deck(deck: genanki.Package, base_title: str) -> None:
     os.makedirs("out", exist_ok=True)
     i = 0

@@ -3,32 +3,38 @@ import genanki
 from anki_cook.utils.load_static import load_template, load_style
 from typing import Mapping, Optional
 
-def make_deck(word_list: WordList, title: str, target_sounds: Optional[Mapping[str, str]], native_sounds: Optional[Mapping[str, str]]) -> genanki.Package:
+
+def make_deck(
+    word_list: WordList,
+    title: str,
+    target_sounds: Optional[Mapping[str, str]],
+    native_sounds: Optional[Mapping[str, str]],
+) -> genanki.Package:
     front_t = load_template("front")
     native_t = load_template("native")
     target_t = load_template("target")
 
     anki_model = genanki.Model(
         1607592013,
-        'Simple Model',
+        "Simple Model",
         fields=[
-            {'name': 'target_word'},
-            {'name': 'target_extra'},
-            {'name': 'target_sound'},
-            {'name': 'native_word'},
-            {'name': 'native_sound'},
-            {'name': 'sort_id'},
+            {"name": "target_word"},
+            {"name": "target_extra"},
+            {"name": "target_sound"},
+            {"name": "native_word"},
+            {"name": "native_sound"},
+            {"name": "sort_id"},
         ],
         templates=[
             {
-                'name': 'target -> native',
-                'qfmt': target_t,
-                'afmt': front_t + native_t,
+                "name": "target -> native",
+                "qfmt": target_t,
+                "afmt": front_t + native_t,
             },
             {
-                'name': 'native -> target',
-                'qfmt': native_t,
-                'afmt': front_t + target_t,
+                "name": "native -> target",
+                "qfmt": native_t,
+                "afmt": front_t + target_t,
             },
         ],
         css=load_style(),
@@ -50,10 +56,17 @@ def make_deck(word_list: WordList, title: str, target_sounds: Optional[Mapping[s
         sort_id = str(i)
         anki_note = genanki.Note(
             model=anki_model,
-            fields=[target_word, target_extra, target_sound, native_word, native_sound, sort_id]
+            fields=[
+                target_word,
+                target_extra,
+                target_sound,
+                native_word,
+                native_sound,
+                sort_id,
+            ],
         )
         anki_deck.add_note(anki_note)
-    
+
     package = genanki.Package(anki_deck)
-    
+
     return package
