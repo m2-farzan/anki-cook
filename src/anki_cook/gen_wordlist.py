@@ -2,7 +2,7 @@ import os
 import re
 
 from anki_cook.openai_client import openai_client
-from anki_cook.wordlist import WordList
+from anki_cook.wordlist import Word, WordList, WordListUnannotated
 
 
 def gen_wordlist(
@@ -29,9 +29,23 @@ def _gen_wordlist_uncached(
     prompt = f"Generate a wordlist of size {count} for the topic '{topic}' in {target_language} with meanings in {native_language}."
     if extra_field:
         prompt += f" Include {extra_field} in the extra field."
-    wordlist = openai_client().beta.chat.completions.parse(
-        model="gpt-4o",
-        messages=[{"role": "user", "content": prompt}],
-        response_format=WordList,
+    response = (
+        openai_client()
+        .beta.chat.completions.parse(
+            model="gpt-4o",
+            messages=[{"role": "user", "content": prompt}],
+            response_format=WordList if extra_field else WordListUnannotated,
+        )
+        .choices[0]
+        .message.parsed
     )
-    return wordlist.choices[0].message.parsed
+    if extra_field:
+        wordlist = response
+    else:
+        wordlist = WordList(
+            words=[
+                Word(original=word.original, meaning=word.meaning, extra="")
+                for word in response.words
+            ]
+        )
+    return wordlist

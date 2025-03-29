@@ -21,7 +21,7 @@ def get_sounds(
             print(f"Using cached sound for '{word}' in {language}")
         else:
             print(f"Generating sound for '{word}' in {language}")
-            instructions = f"Speak the word '{word}' in {language}."
+            instructions = f"Say the word '{word}' in {language}."
             if extras:
                 extra, *extras = extras
                 instructions += f" ({extra})"
