@@ -12,10 +12,14 @@ def make_deck(
     title: str,
     target_sounds: Optional[Mapping[str, str]],
     native_sounds: Optional[Mapping[str, str]],
+    boost_extra: bool = False,
 ) -> genanki.Package:
     front_t = load_template("front")
     native_t = load_template("native")
-    target_t = load_template("target")
+    if boost_extra:
+        target_t = load_template("target_boost_extra")
+    else:
+        target_t = load_template("target")
 
     anki_model = genanki.Model(
         1607592013,

@@ -6,10 +6,15 @@ from anki_cook.openai_client import openai_client
 
 
 def get_sounds(
-    language: str, words: List[str], extras: Optional[List[str]] = None
+    language: str,
+    words: List[str],
+    extras: Optional[List[str]] = None,
+    feedback_cb=None,
 ) -> Mapping[str, str]:
     sounds = {}
-    for word in words:
+    for i, word in enumerate(words):
+        if feedback_cb:
+            feedback_cb(f"Generating {language} sound ({i + 1}/{len(words)})")
         word_sanitized = re.sub(r"\W+", "_", word.lower())
         file_path = f"/tmp/anki_cook_{word_sanitized}_{language}.mp3"
         if os.path.exists(file_path):

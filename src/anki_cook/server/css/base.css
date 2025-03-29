@@ -1,0 +1,20 @@
+.logo {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+body {
+    background-color: #d4b690;
+}
+
+.container {
+    max-width: 40rem;
+}
+
+.wordlist {
+    font-size: 0.8rem;
+    max-height: 20rem;
+    overflow-y: auto;
+}

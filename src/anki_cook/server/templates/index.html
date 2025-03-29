@@ -1,0 +1,101 @@
+{% import 'constants.jinja' as C %}
+
+{% extends 'layout.html' %}
+
+{% block title %}
+{{C.page_title}} | home
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Welcome to {{C.site_title}}</h1>
+      <p class="text-center">This free tool uses AI to generate anki decks about any topic. With audio!</p>
+      <div class="row gap-3">
+        <div class="col-md-12">
+          <label for="topic" class="form-label">Topic</label>
+          <input type="text" class="form-control" id="topic" placeholder="e.g. renting a house", value="{{ d.topic }}">
+        </div>
+        <div class="col-md-12">
+          <label for="native" class="form-label">Native Language</label>
+          <input type="text" class="form-control" id="native" placeholder="e.g. English" value="{{ d.native }}">
+        </div>
+        <div class="col-md-12">
+          <label for="target" class="form-label">Target Language</label>
+          <input type="text" class="form-control" id="target" placeholder="e.g. Japanese" value="{{ d.target }}">
+        </div>
+        <div class="col-md-12">
+          <label for="target" class="form-label">Extra Data</label>
+          <input type="text" class="form-control" id="extra" placeholder="e.g. Kana" value="{{ d.extra }}">
+        </div>
+        <div class="col-md-12">
+          <label for="target" class="form-label">Number of Cards (Max: 100)</label>
+          <input type="number" class="form-control" id="num_cards" placeholder="e.g. 30" value="{{ d.count | default(30) }}">
+        </div>
+        <div class="text-center mt-3 mb-4">
+          <button class="btn btn-primary" id="preview">Preview Deck</button>
+          <button class="btn btn-primary disabled" id="preview-loading">Please wait for up to 30"<div class="spinner-border spinner-border-sm ms-2" role="status"></div></button>
+        </div>
+      </div>
+      <hr>
+      <!-- {% include 'cheers.html' %} -->
+      <p class="text-center mt-3 text-italic">
+        <small>
+          (This is not an official anki project)
+        </small>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_script %}
+
+<script>
+  console.debug("Loaded index.js");
+  $("#preview-loading").hide();
+  $("#preview").on("click", function() {
+    $("#preview").hide();
+    $("#preview-loading").show();
+    var payload = {
+      topic: $("#topic").val(),
+      native: $("#native").val(),
+      target: $("#target").val(),
+      extra: $("#extra").val(),
+      count: $("#num_cards").val()
+    };
+    function poll() {
+      console.debug("Polling...");
+      $.jpost("/api/generate/preview", payload)
+      .done(function(data, status, xhr) {
+        if (xhr.status === 200) {
+          window.location.href = xhr.getResponseHeader("Location");
+        } else if (xhr.status === 202) {
+          setTimeout(poll, 2000);
+        } else {
+          alert("An error occurred. Please try again.");
+          $("#preview").show();
+          $("#preview-loading").hide();
+          console.error(data);
+        }
+      }).fail(function(xhr) {
+        if (xhr.status === 422) {
+          alert(xhr.responseText);
+        } else {
+          alert("An error occurred. Please try again.");
+        }
+        $("#preview").show();
+        $("#preview-loading").hide();
+        console.error(xhr);
+      });
+    }
+    poll();
+  });
+</script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+{% endblock %}

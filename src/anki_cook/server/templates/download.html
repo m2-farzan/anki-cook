@@ -1,0 +1,39 @@
+{% import 'constants.jinja' as C %}
+
+{% extends 'layout.html' %}
+
+{% block title %}
+{{C.page_title}} | home
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">{{C.site_title}}</h1>
+      <div class="row gap-3 px-3 pt-4">
+        <p class="text-center">We cooked your deck!</p>
+        <p class="text-center">Download: <a href="/decks/{{deck_file}}">{{deck_file}}</a></p>
+        
+        <div class="text-center mt-3">
+          <button class="btn btn-secondary" id="back">Back</button>
+        </div>
+        {% include 'cheers.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_script %}
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+  $("#back").on("click", function() {
+    window.location.href = "/preview?topic={{d.topic}}&native={{d.native}}&target={{d.target}}&extra={{d.extra}}&count={{d.count}}&target_tts={{d.target_tts}}&native_tts={{d.native_tts}}&boost_extra={{d.boost_extra}}";
+  });
+</script>
+
+{% endblock %}
