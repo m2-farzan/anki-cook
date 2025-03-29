@@ -1,3 +1,4 @@
+import logging
 import re
 from argparse import ArgumentParser
 
@@ -9,11 +10,12 @@ from anki_cook.utils.source_envfile import source_envfile
 
 
 def main():
+    logging.basicConfig(format="%(message)s", level=logging.INFO)
     source_envfile()
     args = parse_args()
     deck = gen_wordlist(args.topic, args.native, args.target, args.extra, args.count)
     for word in deck.words:
-        print(f"{word.original}: {word.meaning} ({word.extra})")
+        logging.info(f"{word.original}: {word.meaning} ({word.extra})")
     title = re.sub(r"\W+", "_", args.topic.lower())
     target_sounds = args.target_tts and get_sounds(
         args.target,

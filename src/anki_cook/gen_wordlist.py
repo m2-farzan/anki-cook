@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 
@@ -13,7 +14,7 @@ def gen_wordlist(
     cache_file = f"/tmp/anki_cook_{cache_key}.json"
     if os.path.exists(cache_file):
         with open(cache_file) as f:
-            print(f"Loading wordlist from cache: {cache_file}")
+            logging.info(f"Loading wordlist from cache: {cache_file}")
             return WordList.model_validate_json(f.read())
     result = _gen_wordlist_uncached(
         topic, native_language, target_language, extra_field, count

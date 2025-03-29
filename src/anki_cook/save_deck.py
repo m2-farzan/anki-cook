@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import Optional
 
@@ -16,5 +17,5 @@ def save_deck(
         i += 1
         title = f"{base_title}_{i}"
     deck.write_to_file(filename)
-    print(f"Deck saved to {filename}")
+    logging.info(f"Deck saved to {filename}")
     return filename

@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 from typing import List, Mapping, Optional
@@ -18,9 +19,9 @@ def get_sounds(
         word_sanitized = re.sub(r"\W+", "_", word.lower())
         file_path = f"/tmp/anki_cook_{word_sanitized}_{language}.mp3"
         if os.path.exists(file_path):
-            print(f"Using cached sound for '{word}' in {language}")
+            logging.info(f"Using cached sound for '{word}' in {language}")
         else:
-            print(f"Generating sound for '{word}' in {language}")
+            logging.info(f"Generating sound for '{word}' in {language}")
             instructions = f"Say the word '{word}' in {language}."
             if extras:
                 extra, *extras = extras

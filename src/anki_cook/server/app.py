@@ -1,3 +1,4 @@
+import logging
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -19,6 +20,9 @@ app = Flask(__name__)
 word_list_store = {}
 deck_store = {}
 executor = ThreadPoolExecutor(max_workers=4)
+logging.basicConfig(
+    format="[%(asctime)s] [%(levelname)s] %(message)s", level=logging.INFO
+)
 
 
 class JSONResponse(Response):
@@ -81,7 +85,7 @@ def generate_preview():
 
 
 def _generate_preview(d: schema.GenerateWordListSchema):
-    print(
+    logging.info(
         f"Generating preview for [{d.topic}, {d.native}, {d.target}, {d.extra}, {d.count}]"
     )
     deck = gen_wordlist(d.topic, d.native, d.target, d.extra, d.count)
@@ -132,7 +136,7 @@ def generate_full():
 
 def _generate_full(d: schema.GenerateDeckSchema):
     try:
-        print(
+        logging.info(
             f"Generating full deck for [{d.topic}, {d.native}, {d.target}, {d.extra}, {d.count}, {d.target_tts}, {d.native_tts}, {d.boost_extra}]"
         )
         wordlist = gen_wordlist(d.topic, d.native, d.target, d.extra, d.count)
@@ -152,7 +156,7 @@ def _generate_full(d: schema.GenerateDeckSchema):
         )
         basename_sanitized = re.sub(r"\W+", "_", d.topic)
         filename = save_deck(package, basename_sanitized, "/var/decks")
-        print(f"Deck generated: {filename}")
+        logging.info(f"Deck generated: {filename}")
         deck_store[d] = {
             "status": "DONE",
             "message": "Deck generated",
