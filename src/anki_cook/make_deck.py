@@ -74,6 +74,8 @@ def make_deck(
                 native_sound,
                 sort_id,
             ],
+            sort_field=sort_id,
+            due=sort_id,
         )
         anki_deck.add_note(anki_note)
 

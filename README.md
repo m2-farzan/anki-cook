@@ -60,9 +60,7 @@ Deck saved to out/cooking_1.apkg
 
 # Improvement ideas
 
-- [ ] Simple flask front-end for easy use!
 - [ ] More QA and tuning
-- [ ] MAYYYBEE Better card ordering (I think anki takes care of this but I need to double check)
 
 # More examples
 
