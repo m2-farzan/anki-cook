@@ -7,6 +7,12 @@ I never forget the words that I use in real life so I try to use this method bef
 It uses ChatGPT/OpenAI tools to generate the word-list and text-to-speech files.
 So far the accuracy seems to be good enough for daily language learning.
 
+## Live
+
+We're live at https://anki-cook.sacredcarpet.com/.
+
+Read below if you prefer to use it as a cli tool.
+
 ## Installation
 
 ```
