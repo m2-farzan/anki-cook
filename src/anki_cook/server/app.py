@@ -90,11 +90,14 @@ def generate_preview():
 
 
 def _generate_preview(d: schema.GenerateWordListSchema):
+    t_start = time.perf_counter()
     logging.info(
         f"Generating preview for [{d.topic}, {d.native}, {d.target}, {d.extra}, {d.count}]"
     )
     deck = gen_wordlist(d.topic, d.native, d.target, d.extra, d.count)
     word_list_store[d] = deck
+    t_end = time.perf_counter()
+    logging.info(f"Preview generated in {t_end - t_start:.2f}s")
 
 
 @app.route("/preview")
@@ -141,6 +144,7 @@ def generate_full():
 
 def _generate_full(d: schema.GenerateDeckSchema):
     try:
+        t_start = time.perf_counter()
         logging.info(
             f"Generating full deck for [{d.topic}, {d.native}, {d.target}, {d.extra}, {d.count}, {d.target_tts}, {d.native_tts}, {d.boost_extra}]"
         )
@@ -161,7 +165,8 @@ def _generate_full(d: schema.GenerateDeckSchema):
         )
         basename_sanitized = re.sub(r"\W+", "_", d.topic)
         filename = save_deck(package, basename_sanitized, "/var/decks")
-        logging.info(f"Deck generated: {filename}")
+        t_end = time.perf_counter()
+        logging.info(f"Deck generated in {t_end - t_start:.2f}s: {filename}")
         deck_store[d] = {
             "status": "DONE",
             "message": "Deck generated",
