@@ -3,7 +3,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-{{C.page_title}} | home
+{{C.page_title}} | preview
 {% endblock %}
 
 {% block body %}
@@ -35,7 +35,6 @@
             </tbody>
           </table>
         </div>
-        <!-- checkbox for native/target tts -->
         <div class="col-md-12 gap-3">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="target-tts" checked>
@@ -52,7 +51,6 @@
         </div>
         <div class="text-center mt-3">
           <button class="btn btn-primary" id="download">Finalize</button>
-          <button class="btn btn-primary disabled" id="download-loading"><span id="progress">Generating voices<div class="spinner-border spinner-border-sm ms-2" role="status"></div></button>
         </div>
         <div class="text-center mt-3">
           <button class="btn btn-secondary" id="back">Back</button>
@@ -68,12 +66,8 @@
 {% block extra_script %}
 
 <script>
-  console.debug("Loaded preview.js");
-  $("#download-loading").hide();
   $("#download").on("click", function() {
-    $("#download").hide();
-    $("#download-loading").show();
-    var payload = {
+    var params = {
       topic: "{{d.topic}}",
       native: "{{d.native}}",
       target: "{{d.target}}",
@@ -82,38 +76,8 @@
       target_tts: $("#target-tts").is(":checked"),
       native_tts: $("#native-tts").is(":checked"),
       boost_extra: $("#large-extra").is(":checked")
-    };
-    function poll() {
-      console.debug("Polling...");
-      $.jpost("/api/generate/full", payload)
-      .done(function(data, status, xhr) {
-        if (xhr.status === 200) {
-          window.location.href = xhr.getResponseHeader("Location");
-        } else if (xhr.status === 202) {
-          if (data.message) {
-            $("#progress").text(data.message);
-          } else {
-            $("#progress").text("...");
-          }
-          setTimeout(poll, 2000);
-        } else {
-          alert("An error occurred. Please try again.");
-          $("#preview").show();
-          $("#preview-loading").hide();
-          console.error(data);
-        }
-      }).fail(function(xhr) {
-        if (xhr.status === 422) {
-          alert(xhr.responseText);
-        } else {
-          alert("An error occurred. Please try again.");
-        }
-        $("#preview").show();
-        $("#preview-loading").hide();
-        console.error(xhr);
-      });
     }
-    poll();
+    window.location.href = "/download?" + $.param(params);
   });
   $("#back").on("click", function() {
     window.location.href = "/?topic={{d.topic}}&native={{d.native}}&target={{d.target}}&extra={{d.extra}}&count={{d.count}}";

@@ -127,7 +127,7 @@ def generate_full():
             status=200,
             response="{}",
             headers={
-                "Location": f"/download?topic={d.topic}&native={d.native}&target={d.target}&extra={d.extra}&count={d.count}&target_tts={d.target_tts}&native_tts={d.native_tts}&boost_extra={d.boost_extra}"
+                "Location": "/decks/" + basename(deck_store[d]["filename"])
             },
         )
     else:
@@ -176,10 +176,7 @@ def download():
         d = schema.GenerateDeckSchema(**request.args)
     except pydantic.ValidationError as e:
         return Response(status=422, response=str(e))
-    deck_file = "none.apkg"
-    if d in deck_store and deck_store[d]["status"] == "DONE":
-        deck_file = basename(deck_store[d]["filename"])
-    return render_template("download.html", d=d, deck_file=deck_file)
+    return render_template("download.html", d=d)
 
 
 @app.route("/decks/<path:path>")

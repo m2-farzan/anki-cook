@@ -3,7 +3,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-{{C.page_title}} | home
+{{C.page_title}} | download
 {% endblock %}
 
 {% block body %}
@@ -13,9 +13,8 @@
     <div class="col-md-12">
       <h1 class="text-center">{{C.site_title}}</h1>
       <div class="row gap-3 px-3 pt-4">
-        <p class="text-center">We cooked your deck!</p>
-        <p class="text-center">Download: <a href="/decks/{{deck_file}}">{{deck_file}}</a></p>
-        
+        <p id="feedback-in-progress" class="text-center">Cooking now!<br><a id="progress">Checking...</a></p>
+        <p id="download-text" class="text-center">Download: <a id="download-link" href=""></a></p>
         <div class="text-center mt-3">
           <button class="btn btn-secondary" id="back">Back</button>
         </div>
@@ -31,9 +30,57 @@
 {% block extra_script %}
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script>
+  $("#download-text").hide();
   $("#back").on("click", function() {
     window.location.href = "/preview?topic={{d.topic}}&native={{d.native}}&target={{d.target}}&extra={{d.extra}}&count={{d.count}}&target_tts={{d.target_tts}}&native_tts={{d.native_tts}}&boost_extra={{d.boost_extra}}";
   });
+  function checkResult() {
+    var payload = {
+      topic: "{{d.topic}}",
+      native: "{{d.native}}",
+      target: "{{d.target}}",
+      extra: "{{d.extra}}",
+      count: "{{d.count}}",
+      target_tts: "{{d.target_tts}}",
+      native_tts: "{{d.native_tts}}",
+      boost_extra: "{{d.boost_extra}}"
+    };
+    function poll() {
+      console.debug("Polling...");
+      $.jpost("/api/generate/full", payload)
+      .done(function(data, status, xhr) {
+        if (xhr.status === 200) {
+          link = xhr.getResponseHeader("Location");
+          $("#download-link").attr("href", link);
+          $("#download-link").text(link.split(/[\\/]/).pop());
+          $("#feedback-in-progress").hide();
+          $("#download-text").show();
+        } else if (xhr.status === 202) {
+          if (data.message) {
+            $("#progress").text(data.message);
+          } else {
+            $("#progress").text("...");
+          }
+          setTimeout(poll, 2000);
+        } else {
+          alert("An error occurred. Please try again.");
+          console.error(data);
+          $("#feedback-in-progress").hide();
+        }
+      }).fail(function(xhr) {
+        if (xhr.status === 422) {
+          alert(xhr.responseText);
+        } else {
+          alert("An error occurred. Please try again.");
+        }
+        $("#feedback-in-progress").hide();
+        console.error(xhr);
+      });
+    }
+    poll();
+  }
+  checkResult();
+
 </script>
 
 {% endblock %}

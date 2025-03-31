@@ -36,7 +36,7 @@
         </div>
         <div class="text-center mt-3 mb-4">
           <button class="btn btn-primary" id="preview">Preview Deck</button>
-          <button class="btn btn-primary disabled" id="preview-loading">Please wait for up to 30"<div class="spinner-border spinner-border-sm ms-2" role="status"></div></button>
+          <button class="btn btn-primary disabled" id="preview-loading">Please wait for up to 10"<div class="spinner-border spinner-border-sm ms-2" role="status"></div></button>
         </div>
       </div>
       <hr>
@@ -56,7 +56,6 @@
 {% block extra_script %}
 
 <script>
-  console.debug("Loaded index.js");
   $("#preview-loading").hide();
   $("#preview").on("click", function() {
     $("#preview").hide();
