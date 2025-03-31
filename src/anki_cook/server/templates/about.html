@@ -1,0 +1,42 @@
+{% import 'constants.jinja' as C %}
+
+{% extends 'layout.html' %}
+
+{% block title %}
+{{C.page_title}} | about
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">{{C.site_title}}</h1>
+      <div class="row px-3 pt-4">
+        <p>
+          This is a personal project and is not connected to the official Anki.
+        </p>
+        <p>
+          I pay some small money to maintain this server.
+          You can contribute by buying me a coffee.
+        </p>
+        <p>
+          Feedback, bug reports, and PRs are welcome through github or email: <a href="mailto:m2_farzan@yahoo.com">m2_farzan@yahoo.com</a>
+        </p>
+        <p>
+          Good luck with your studies!
+        </p>
+
+        {% include 'cheers.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_script %}
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+{% endblock %}

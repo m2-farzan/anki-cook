@@ -63,6 +63,11 @@ def send_icon():
     return send_from_directory("images", "favicon.ico")
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
 @app.post("/api/generate/preview")
 def generate_preview():
     try:
