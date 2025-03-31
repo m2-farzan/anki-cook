@@ -73,6 +73,8 @@
       $.jpost("/api/generate/preview", payload)
       .done(function(data, status, xhr) {
         if (xhr.status === 200) {
+          $("#preview-loading").hide();
+          $("#preview").show();
           window.location.href = xhr.getResponseHeader("Location");
         } else if (xhr.status === 202) {
           setTimeout(poll, 2000);
